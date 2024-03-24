@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Form, Input, Button, Card, Row, Col, Tooltip } from "antd";
+import { Form, Input, Button, Card, Row, Col, Tooltip, Spin } from "antd";
 import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataRequest } from "../dux/guessFormReducer";
@@ -9,12 +9,12 @@ import InputForm from "./InputForm";
 
 const GuessForm: React.FC = () => {
   const [isNameEntered, setIsNameEntered] = useState<boolean>(false);
-  const isLoading = useSelector((state) => state.guess.isLoading);
+  const isLoading = useSelector((state: any) => state.guess.isLoading);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   // Custom validation rule for the name field to accept only text
-  const validateName = (_, value) => {
+  const validateName = (_ : any, value : any) => {
     const pattern = /^[a-zA-Z\s]*$/; // Regular expression to match only letters and spaces
     if (!value || pattern.test(value)) {
       return Promise.resolve();
@@ -22,7 +22,7 @@ const GuessForm: React.FC = () => {
     return Promise.reject(new Error("Name should only contain text"));
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values : any) => {
     console.log("Submitted values:", values);
     if (values.name.trim() === "") {
       form.setFields([
