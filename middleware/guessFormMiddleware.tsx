@@ -1,10 +1,6 @@
 // middleware/guessMiddleware.js
 import { fetchDataSuccess, fetchDataFailure } from "../dux/guessFormReducer";
-import {
-  urlAgify,
-  urlGenderize,
-  urlNationalize,
-} from "@/helpers/apiEndpointHelper";
+
 import { guessFormHelper } from "@/helpers/guessFormHelper";
 import { Middleware } from "redux";
 

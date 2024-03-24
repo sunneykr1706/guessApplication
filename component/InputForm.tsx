@@ -5,29 +5,29 @@ import { useSelector } from "react-redux";
 const { Option } = Select;
 
 const InputForm: React.FC = () => {
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [nationality, setNationality] = useState("");
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [countResult, setCountResult] = useState(0);
+  const [age, setAge] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [nationality, setNationality] = useState<string>("");
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+  const [countResult, setCountResult] = useState<number>(0);
   const countryList = useSelector((state: any) => state.guess.countryList);
   const correctAge = useSelector((state: any) => state.guess.age);
   const correctGender = useSelector((state: any) => state.guess.gender);
   const correctCountry = useSelector((state: any) => state.guess.country);
 
-  const handleAgeChange = (value) => {
+  const handleAgeChange = (value: string) => {
     setAge(value);
   };
 
-  const handleGenderChange = (value) => {
+  const handleGenderChange = (value: string) => {
     setGender(value);
   };
 
-  const handleNationalityChange = (value) => {
+  const handleNationalityChange = (value: string) => {
     setNationality(value);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: { age: string, gender: string, nationality: string }) => {
     console.log("Submitted values:", values);
     setFormSubmitted(true);
     let correctCount = 0;
@@ -88,17 +88,17 @@ const InputForm: React.FC = () => {
             label="Nationality"
             rules={[{ required: true, message: "Please select nationality" }]}
           >
-            <Select
-              value={nationality}
-              onChange={handleNationalityChange}
-              placeholder="Select nationality"
-            >
-              {countryList?.map((country) => (
-                <Option key={country.country_id} value={country.country_id}>
-                  {country.country_id}
-                </Option>
-              ))}
-            </Select>
+        <Select
+          value={nationality}
+          onChange={handleNationalityChange}
+          placeholder="Select nationality"
+        >
+          {countryList?.map((country: { country_id: string }) => (
+            <Option key={country.country_id} value={country.country_id}>
+              {country.country_id}
+            </Option>
+          ))}
+        </Select>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">

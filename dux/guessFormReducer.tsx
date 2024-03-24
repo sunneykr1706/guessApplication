@@ -34,11 +34,12 @@ const guessFormReducer = (state = initialState, action: any) => {
 
 export default guessFormReducer;
 
-// Actions
-export const fetchDataRequest = (name) => ({
+
+export const fetchDataRequest = (name: string) => ({
   type: FETCH_DATA_REQUEST,
   payload: name,
 });
+
 export const fetchDataSuccess = (
   age: any,
   gender: any,
@@ -55,4 +56,3 @@ export const fetchDataFailure = (error: any) => ({
 export const fetchAllData = ({ guessFormReducer }: any) => {
   return guessFormReducer;
 };
-

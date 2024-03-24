@@ -7,22 +7,28 @@ import { fetchDataRequest } from "../dux/guessFormReducer";
 import { guessRuleGame } from "@/helpers/constants";
 import InputForm from "./InputForm";
 
+// Define the interface for your state
+interface MyState {
+  guess: {
+    isLoading: boolean;
+  };
+}
+
 const GuessForm: React.FC = () => {
   const [isNameEntered, setIsNameEntered] = useState<boolean>(false);
-  const isLoading = useSelector((state: any) => state.guess.isLoading);
+  const isLoading = useSelector((state: MyState) => state.guess.isLoading); // Add type annotation
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
-  // Custom validation rule for the name field to accept only text
-  const validateName = (_ : any, value : any) => {
-    const pattern = /^[a-zA-Z\s]*$/; // Regular expression to match only letters and spaces
+  const validateName = (_: unknown, value: string) => {
+    const pattern = /^[a-zA-Z\s]*$/;
     if (!value || pattern.test(value)) {
       return Promise.resolve();
     }
     return Promise.reject(new Error("Name should only contain text"));
   };
 
-  const handleSubmit = async (values : any) => {
+  const handleSubmit = async (values: { name: string }) => {
     console.log("Submitted values:", values);
     if (values.name.trim() === "") {
       form.setFields([
@@ -34,9 +40,8 @@ const GuessForm: React.FC = () => {
       return;
     }
     dispatch(fetchDataRequest(values.name));
-    setIsNameEntered(true); // Set isNameEntered to true when a name is entered
+    setIsNameEntered(true);
   };
-
   return (
     <div
       style={{
@@ -76,15 +81,15 @@ const GuessForm: React.FC = () => {
                   ]}
                 >
                   <Input
-                    type="text" // Ensure input type is text
+                    type="text"
                     prefix={<UserOutlined />}
                     placeholder="Enter a name"
-                    disabled={isNameEntered} // Disable input when isNameEntered is true
+                    disabled={isNameEntered}
                   />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                {isNameEntered ? null : ( // Conditionally render based on isNameEntered state
+                {isNameEntered ? null : (
                   <div style={{ marginTop: -26 }}>
                     <Button
                       type="primary"
@@ -100,8 +105,6 @@ const GuessForm: React.FC = () => {
             </Row>
           </Form>
         </div>
-
-        {/* Render InputForm only if name is entered */}
         {isNameEntered && <InputForm />}
       </Card>
     </div>
